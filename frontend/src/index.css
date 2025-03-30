@@ -145,7 +145,7 @@
   }
   
   .minecraft-bg {
-    background-image: url('/lovable-uploads/fc426a56-9bf0-4447-b68b-45af8a06ecfe.png');
+    background-image: url('../bg.jpg');
     background-size: cover;
     background-position: center bottom;
     image-rendering: pixelated;
