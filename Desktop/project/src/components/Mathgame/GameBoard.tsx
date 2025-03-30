@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
-import { useGameStore } from '../../store/gameStore';
-import { GRID_SIZE } from '../../config/levels';
-import LevelComplete from '../LevelComplete';
-import LevelIntro from '../LevelIntro';
+import { useGameStore } from './gameStore';
+import { GRID_SIZE } from './levels';
+import LevelComplete from './LevelComplete';
+import LevelIntro from './LevelIntro';
 
 const GameBoard: React.FC = () => {
   const {
