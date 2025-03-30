@@ -1,6 +1,6 @@
 import React from 'react';
 import { Play } from 'lucide-react';
-import { LEVEL_DESCRIPTIONS } from '../config/levels';
+import { LEVEL_DESCRIPTIONS } from './levels';
 
 interface LevelIntroProps {
   level: number;
