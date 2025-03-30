@@ -1,70 +1,24 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { useStore } from '../store/useStore';
 
-interface ProgressBarProps {
-  value: number;
-  max: number;
-  className?: string;
-  color?: 'green' | 'blue' | 'red' | 'purple' | 'gold';
-  label?: string;
-  showValue?: boolean;
-}
+export const ProgressBar: React.FC = () => {
+  const { progress } = useStore();
+  const xpInCurrentLevel = progress.xp % 1000;
+  const progressPercentage = (xpInCurrentLevel / 1000) * 100;
 
-const ProgressBar = ({ 
-  value, 
-  max, 
-  className,
-  color = 'green',
-  label,
-  showValue = false
-}: ProgressBarProps) => {
-  const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
-  
-  const colorStyles = {
-    green: {
-      barColor: 'var(--bar-color, #4FAA45)',
-      barColorLight: 'var(--bar-color-light, #60C253)'
-    },
-    blue: {
-      barColor: 'var(--bar-color, #5B9AE2)',
-      barColorLight: 'var(--bar-color-light, #6BA9F1)'
-    },
-    red: {
-      barColor: 'var(--bar-color, #B02E26)',
-      barColorLight: 'var(--bar-color-light, #C03C34)'
-    },
-    purple: {
-      barColor: 'var(--bar-color, #8932B8)',
-      barColorLight: 'var(--bar-color-light, #9841C9)'
-    },
-    gold: {
-      barColor: 'var(--bar-color, #FFB300)',
-      barColorLight: 'var(--bar-color-light, #FFC233)'
-    }
-  };
-  
   return (
-    <div className={cn('w-full', className)}>
-      {label && (
-        <div className="flex justify-between mb-1">
-          <span className="font-pixel text-xs">{label}</span>
-          {showValue && (
-            <span className="font-pixel text-xs">{value}/{max}</span>
-          )}
-        </div>
-      )}
-      <div className="progress-bar pixel-corners">
-        <div 
-          className="progress-fill"
-          style={{
-            width: `${percentage}%`,
-            '--bar-color': colorStyles[color].barColor,
-            '--bar-color-light': colorStyles[color].barColorLight
-          } as React.CSSProperties}          
+    <div className="w-full max-w-xl mx-auto mt-4 p-4">
+      <div className="flex justify-between mb-2">
+        <span className="text-sm font-semibold">Level {progress.level}</span>
+        <span className="text-sm">{xpInCurrentLevel}/1000 XP</span>
+      </div>
+      <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-orange-900 transition-all duration-500 ease-out"
+          style={{ width: `${progressPercentage}%` }}
         />
       </div>
+      
     </div>
   );
 };
-
-export default ProgressBar;

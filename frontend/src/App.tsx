@@ -1,36 +1,51 @@
-import { Toaster } from "./components/ui/toaster";
-import { Toaster as Sonner } from "./components/ui/sonner";
-import { TooltipProvider } from "./components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/Pages/Login";
-import Index from "./components/Pages/Index";
-import Dashboard from "./components/Pages/Dashboard";
-import Courses from "./components/Courses/Courses";
-import MathCourse from "./components/Courses/MathCourse";
-import MusicCourse from "./components/Courses/MusicTheory";
-import EnglishCourse from "./components/Courses/EnglishCourse";
+import React, { useState, useEffect } from 'react';
+import { Navbar } from './components/Navbar';
+import { ProgressBar } from './components/ProgressBar';
+import { QuestionCard } from './components/QuestionCard';
+import { questions } from './data/questions';
+import { useStore } from './store/useStore';
 
-const queryClient = new QueryClient();
+function App() {
+  const { progress } = useStore();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  
+  const availableQuestions = questions.filter(
+    q => q.level <= progress.level && !progress.questionsAnswered.includes(q.id)
+  );
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/courses/math" element={<MathCourse />} />
-          <Route path="/courses/music" element={<MusicCourse />} />
-          <Route path="/courses/english" element={<EnglishCourse />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+  const handleNextQuestion = () => {
+    setCurrentQuestionIndex((prev) => 
+      (prev + 1) % availableQuestions.length
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-blue-200">
+      <Navbar />
+      <main className="container mx-auto px-4 py-8">
+        <ProgressBar />
+        
+        {availableQuestions.length > 0 ? (
+          <div className="mt-8">
+            
+            <QuestionCard
+              question={availableQuestions[currentQuestionIndex]}
+              onAnswer={handleNextQuestion}
+            />
+          </div>
+        ) : (
+          <div className="text-center mt-8">
+            <h2 className="text-2xl font-bold text-gray-800">
+              Congratulations! You've completed all questions for your current level.
+            </h2>
+            <p className="mt-4 text-gray-600">
+              Keep earning XP to unlock more challenging questions!
+            </p>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
 
 export default App;

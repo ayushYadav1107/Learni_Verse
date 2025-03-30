@@ -1,27 +1,15 @@
-export interface User {
-  id: string;
-  name: string;
+export interface Question {
+  id: number;
+  question: string;
+  options: string[];
+  correctAnswer: string;
+  imageUrl?: string;
   level: number;
+  piano: string;
+}
+
+export interface UserProgress {
   xp: number;
-  points: number;
-  achievements: Achievement[];
-  email: string;
-  enrolledCourses: string[];
-}
-
-export interface Course {
-  id: string;
-  title: string;
-  description: string;
-  xpReward: number;
-  pointsReward: number;
-  completed: boolean;
-  enrolled: boolean;
-}
-
-export interface Achievement {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
+  level: number;
+  questionsAnswered: number[];
 }
