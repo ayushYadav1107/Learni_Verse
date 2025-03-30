@@ -22,11 +22,10 @@ const Login = () => {
     
     setIsLoading(true);
     
-    // Simulate login - in a real app, this would call an API
     setTimeout(() => {
       setIsLoading(false);
       toast.success('Login successful!');
-      navigate('/dashboard');
+      navigate('/');
     }, 1500);
   };
   
@@ -81,9 +80,6 @@ const Login = () => {
           </div>
         </PixelCard>
         
-        <div className="text-center font-pixel text-xs text-white text-opacity-80 px-4 py-2 bg-minecraft-black bg-opacity-60 pixel-corners">
-          Click login with any credentials to enter the game
-        </div>
       </div>
     </div>
   );

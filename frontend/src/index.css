@@ -174,10 +174,10 @@
   .progress-fill {
     @apply h-full transition-all duration-300;
     background-image: linear-gradient(to right, 
-      var(--bar-color) 0%, var(--bar-color) 25%, 
-      var(--bar-color-light) 25%, var(--bar-color-light) 50%, 
-      var(--bar-color) 50%, var(--bar-color) 75%, 
-      var(--bar-color-light) 75%, var(--bar-color-light) 100%);
+  var(--bar-color, #5B9AE2) 0%, var(--bar-color, #5B9AE2) 25%, 
+  var(--bar-color-light, #6BA9F1) 25%, var(--bar-color-light, #6BA9F1) 50%, 
+  var(--bar-color, #5B9AE2) 50%, var(--bar-color, #5B9AE2) 75%, 
+  var(--bar-color-light, #6BA9F1) 75%, var(--bar-color-light, #6BA9F1) 100%);
     background-size: 8px 8px;
   }
 }

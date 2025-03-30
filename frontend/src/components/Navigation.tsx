@@ -10,7 +10,7 @@ const Navigation = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 bg-minecraft-brown bg-opacity-90 backdrop-blur-sm px-6 py-3 z-50 flex items-center justify-between border-b-4 border-minecraft-darkBrown">
       <Link to="/" className="font-pixel text-white text-xl tracking-wider">
-        LearniVerse Hut
+        LearniVerse
       </Link>
       
       <div className="flex space-x-2">

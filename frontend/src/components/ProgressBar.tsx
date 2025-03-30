@@ -58,8 +58,9 @@ const ProgressBar = ({
           className="progress-fill"
           style={{
             width: `${percentage}%`,
-            ...colorStyles[color]
-          }}
+            '--bar-color': colorStyles[color].barColor,
+            '--bar-color-light': colorStyles[color].barColorLight
+          } as React.CSSProperties}          
         />
       </div>
     </div>

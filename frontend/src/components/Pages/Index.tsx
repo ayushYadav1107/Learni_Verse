@@ -14,7 +14,7 @@ const Index = () => {
         <div className="max-w-4xl mx-auto mt-16">
           <div className="text-center mb-16">
             <h1 className="text-4xl font-pixel text-white mb-4 animate-float drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
-              Welcome to LearniVerse Hut
+              Welcome to LearniVerse
             </h1>
             <p className="text-xl font-pixel text-white max-w-2xl mx-auto drop-shadow-[0_2px_1px_rgba(0,0,0,0.9)]">
               Start your learning adventure today!
@@ -79,7 +79,7 @@ const Index = () => {
       
       <footer className="bg-minecraft-black bg-opacity-80 text-white py-6">
         <div className="container mx-auto px-4 text-center">
-          <p className="font-pixel text-sm">© 2023 LearniVerse Hut</p>
+          <p className="font-pixel text-sm">© 2025 LearniVerse</p>
         </div>
       </footer>
     </div>

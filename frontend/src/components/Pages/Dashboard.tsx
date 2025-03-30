@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../Navigation';
 import PixelCard from '../PixelCard';
@@ -16,12 +15,12 @@ const Dashboard = () => {
             <PixelCard className="h-full">
               <div className="flex items-center mb-6">
                 <div className="w-16 h-16 bg-minecraft-blue text-white font-pixel flex items-center justify-center text-xl pixel-corners">
-                  Lv 5
+                  Lv 1
                 </div>
                 <div className="ml-4">
                   <h2 className="font-pixel text-lg mb-2">Adventure Stats</h2>
                   <ProgressBar 
-                    value={350} 
+                    value={50} 
                     max={500} 
                     color="blue" 
                     label="Experience" 
@@ -39,7 +38,7 @@ const Dashboard = () => {
               <h3 className="font-pixel text-lg mb-4">Subject Skill Levels</h3>
               
               <div className="space-y-4">
-                <SkillBar label="Math" value={65} color="green" />
+                <SkillBar label="Math" value={100} color="green" />
                 <SkillBar label="Music Theory" value={40} color="purple" />
                 <SkillBar label="English Literature" value={75} color="blue" />
               </div>
@@ -54,13 +53,13 @@ const Dashboard = () => {
           
           <div>
             <PixelCard variant="wood" className="mb-6">
-              <h2 className="font-pixel text-lg mb-4">Daily Quests</h2>
+              <h2 className="font-pixel bg-minecraft-brown p-2 rounded-lg text-lg mb-4">Daily Quests</h2>
               
-              <div className="space-y-4">
+              <div className="space-y-4 bg-orange-300">
                 <QuestItem 
                   title="Complete Math Challenge" 
                   reward="+25 XP" 
-                  completed={true} 
+                  completed={false} 
                 />
                 <QuestItem 
                   title="Read Chapter 3" 
@@ -76,9 +75,9 @@ const Dashboard = () => {
             </PixelCard>
             
             <PixelCard variant="stone">
-              <h2 className="font-pixel text-lg mb-4">Achievements</h2>
+              <h2 className="font-pixel bg-minecraft-brown p-2 rounded-lg text-lg mb-4">Achievements</h2>
               
-              <div className="space-y-3">
+              <div className="space-y-3 bg-orange-300">
                 <AchievementItem 
                   title="First Steps" 
                   description="Complete your first lesson" 
@@ -107,7 +106,7 @@ const Dashboard = () => {
         <PixelCard>
           <h2 className="font-pixel text-lg mb-4">Recent Activity</h2>
           
-          <div className="space-y-2">
+          <div className="space-y-2 bg-neutral-300">
             <ActivityItem 
               title="Completed Math Quiz" 
               timestamp="2 hours ago" 
