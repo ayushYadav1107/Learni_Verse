@@ -1,43 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navigation from '../Navigation';
 import PixelCard from '../PixelCard';
 import PixelButton from '../PixelButton';
 import { Link } from 'react-router-dom';
 import { BookOpen } from 'lucide-react';
 import ProgressBar from '../ProgressBar';
+import GameComponent from '../english/GameComponent';
+import { useGameStore } from '../english/useGameStore';
 
 const EnglishCourse = () => {
-  const [activeBook, setActiveBook] = useState<number | null>(null);
+  const [activeBook, setActiveBook] = useState<boolean>(false);
+  const [isReading, setIsReading] = useState<boolean>(false);
+  const [bookProgress, setBookProgress] = useState<number>(75);
   
-  const books = [
-    {
-      title: "Romeo and Juliet",
-      author: "William Shakespeare",
-      genre: "Tragedy",
-      era: "Renaissance",
-      progress: 75,
-      description: "A tragic tale of two young lovers whose deaths ultimately reconcile their feuding families.",
-      keyThemes: ["Love", "Fate", "Violence", "Youth", "Identity"]
-    },
-    {
-      title: "To Kill a Mockingbird",
-      author: "Harper Lee",
-      genre: "Southern Gothic",
-      era: "Modern",
-      progress: 40,
-      description: "The story of racial injustice and moral growth as seen through the eyes of a child in the American South.",
-      keyThemes: ["Justice", "Racism", "Innocence", "Morality", "Class"]
-    },
-    {
-      title: "The Great Gatsby",
-      author: "F. Scott Fitzgerald",
-      genre: "Novel",
-      era: "Modern",
-      progress: 10,
-      description: "A portrait of the Jazz Age in all its decadence and excess, through the story of a self-made millionaire.",
-      keyThemes: ["Wealth", "Dreams", "Social Status", "Time", "Appearance"]
+  // Get game state to check if story is completed
+  const { isGameOver } = useGameStore();
+  
+  // Update progress when game is over
+  useEffect(() => {
+    if (isGameOver) {
+      setBookProgress(100);
     }
-  ];
+  }, [isGameOver]);
+  
+  const book = {
+    title: "The Raven and the Fox",
+    author: "Jean de La Fontaine",
+    genre: "Fable",
+    era: "Timeless",
+    description: "A moral tale about a clever fox tricking a vain raven into dropping its food.",
+    keyThemes: ["Flattery", "deception", "pride", "wisdom"]
+  };
+  
+  const handleReturnFromReading = () => {
+    setIsReading(false);
+  };
+  
+  if (isReading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex flex-col items-center w-full p-4">
+        <div className="bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-screen-2xl">
+          <h1 className="text-3xl font-bold text-center mb-6 text-white">The Raven and the Fox</h1>
+          <GameComponent onReturn={handleReturnFromReading} />
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="min-h-screen minecraft-bg pb-10">
@@ -65,7 +73,7 @@ const EnglishCourse = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className="bg-gray-100 p-4 text-center pixel-corners">
                 <div className="text-3xl mb-2">📚</div>
-                <div className="font-pixel">3 Books</div>
+                <div className="font-pixel">1 Book</div>
                 <div className="text-xs text-gray-600">In Your Library</div>
               </div>
               
@@ -98,79 +106,78 @@ const EnglishCourse = () => {
           
           <div className="mb-8">
             <h3 className="text-xl font-pixel text-white mb-4 drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
-              Your Reading List
+              Your Reading
             </h3>
             
-            {books.map((book, index) => (
-              <div key={index} className="mb-4">
-                <div 
-                  className="bg-white p-4 pixel-corners cursor-pointer flex justify-between items-center"
-                  onClick={() => setActiveBook(activeBook === index ? null : index)}
-                >
-                  <div>
-                    <h3 className="font-pixel text-lg">{book.title}</h3>
-                    <p className="text-sm text-gray-600">by {book.author}</p>
-                  </div>
-                  <div className="text-xl">{activeBook === index ? '▼' : '▶'}</div>
+            <div className="mb-4">
+              <div 
+                className="bg-white p-4 pixel-corners cursor-pointer flex justify-between items-center"
+                onClick={() => setActiveBook(!activeBook)}
+              >
+                <div>
+                  <h3 className="font-pixel text-lg">{book.title}</h3>
+                  <p className="text-sm text-gray-600">by {book.author}</p>
                 </div>
-                
-                {activeBook === index && (
-                  <div className="bg-gray-100 p-4 border-t-0 mt-1 pixel-corners">
-                    <div className="mb-4">
-                      <div className="flex justify-between mb-1">
-                        <span className="text-sm font-pixel">Reading Progress</span>
-                        <span className="text-sm">{book.progress}%</span>
-                      </div>
-                      <ProgressBar value={book.progress} max={100} color="blue" />
+                <div className="text-xl">{activeBook ? '▼' : '▶'}</div>
+              </div>
+              
+              {activeBook && (
+                <div className="bg-gray-100 p-4 border-t-0 mt-1 pixel-corners">
+                  <div className="mb-4">
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-pixel">Reading Progress</span>
+                      <span className="text-sm">{bookProgress}%</span>
                     </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <div className="font-pixel text-sm mb-1">Genre</div>
-                        <div className="bg-minecraft-blue text-white text-xs px-2 py-1 inline-block pixel-corners">
-                          {book.genre}
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <div className="font-pixel text-sm mb-1">Era</div>
-                        <div className="bg-minecraft-purple text-white text-xs px-2 py-1 inline-block pixel-corners">
-                          {book.era}
-                        </div>
+                    <ProgressBar value={bookProgress} max={100} color="blue" />
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <div className="font-pixel text-sm mb-1">Genre</div>
+                      <div className="bg-minecraft-blue text-white text-xs px-2 py-1 inline-block pixel-corners">
+                        {book.genre}
                       </div>
                     </div>
                     
-                    <div className="mb-4">
-                      <div className="font-pixel text-sm mb-1">Description</div>
-                      <p className="text-sm">{book.description}</p>
-                    </div>
-                    
-                    <div className="mb-4">
-                      <div className="font-pixel text-sm mb-2">Key Themes</div>
-                      <div className="flex flex-wrap gap-2">
-                        {book.keyThemes.map((theme, themeIndex) => (
-                          <div 
-                            key={themeIndex}
-                            className="bg-minecraft-gold bg-opacity-50 text-minecraft-black text-xs px-2 py-1 pixel-corners"
-                          >
-                            {theme}
-                          </div>
-                        ))}
+                    <div>
+                      <div className="font-pixel text-sm mb-1">Era</div>
+                      <div className="bg-minecraft-purple text-white text-xs px-2 py-1 inline-block pixel-corners">
+                        {book.era}
                       </div>
-                    </div>
-                    
-                    <div className="flex space-x-3">
-                      <PixelButton variant="secondary">
-                        Continue Reading
-                      </PixelButton>
-                      <PixelButton variant="primary">
-                        Take Quiz
-                      </PixelButton>
                     </div>
                   </div>
-                )}
-              </div>
-            ))}
+                  
+                  <div className="mb-4">
+                    <div className="font-pixel text-sm mb-1">Description</div>
+                    <p className="text-sm">{book.description}</p>
+                  </div>
+                  
+                  <div className="mb-4">
+                    <div className="font-pixel text-sm mb-2">Key Themes</div>
+                    <div className="flex flex-wrap gap-2">
+                      {book.keyThemes.map((theme, themeIndex) => (
+                        <div 
+                          key={themeIndex}
+                          className="bg-minecraft-gold bg-opacity-50 text-minecraft-black text-xs px-2 py-1 pixel-corners"
+                        >
+                          {theme}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="flex">
+                    <PixelButton 
+                      variant="secondary" 
+                      onClick={() => setIsReading(true)} 
+                      className="w-full"
+                    >
+                      {bookProgress === 100 ? "Read Again" : "Continue Reading"}
+                    </PixelButton>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
