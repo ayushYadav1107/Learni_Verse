@@ -1,4 +1,4 @@
-import { LevelConfig, LevelDescription } from '../types/game';
+import { LevelConfig, LevelDescription } from './game';
 
 export const GRID_SIZE = 20;
 export const GAME_SPEED = 150;
