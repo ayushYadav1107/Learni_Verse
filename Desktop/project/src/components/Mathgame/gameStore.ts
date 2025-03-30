@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { GameState, Position, Direction, Food } from '../types/game';
-import { GRID_SIZE, LEVELS, FOOD_TIMEOUT } from '../config/levels';
+import { GameState, Position, Direction, Food } from './game';
+import { GRID_SIZE, LEVELS, FOOD_TIMEOUT } from './levels';
 
 const getRandomPosition = (snake: Position[]): Position => {
   let position: Position;
